@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="well spaced" style="width:60%">
+    <h2>Events</h2>
+    <ul>
+      {% for event in event_available %}
+          <li>
+              <a href="/search_result/{{ event.title }}">
+                {{ event.date }} ({{ event.location }})
+              </a>
+          </li>
+      {% endfor %}
+    </ul>
+</div>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'base.html' %} {% block content %}
+
+<h1>Welcome</h1>
+<br>
+<div class="well spaced" style="width:97%">
+  <h2>{{ user.email }}</h2>
+
+</div>
+
+<h2>List of events to attend<h2>
+
+
+
+<h2>List of organized events</h2>
+
+
+<form action="create_event.html">
+
+<div class="form-group">
+<label>Create and event</label>
+        <input type="submit" value="Create" class="btn">
+    </div>
+</form>
+
+<a href="/event_list">Search</a>
+
+
+
+
+{% endblock %}
