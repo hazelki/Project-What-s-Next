@@ -2,9 +2,10 @@ from jinja2 import StrictUndefined
 
 from flask import Flask, render_template, request, flash, redirect, session
 from flask_debugtoolbar import DebugToolbarExtension
-
+from datetime import datetime, timedelta
 from model import connect_to_db, db, User, Event, Saved_Event, Category, Event_Category
 
+from sqlalchemy import extract
 
 app = Flask(__name__)
 
@@ -22,31 +23,38 @@ def index():
 
     return render_template("homepage.html")
 
-@app.route('/login', methods=['POST'])
+# @app.route('/login', methods=['GET'])
+# def login_form():
+#     """Show login form."""
+
+#     return render_template("dashboard.html") 
+#     # render_template when GET method
+
+
+@app.route('/login')
 def login_process():
     """Process login."""
 
     # Get form variables
-    email = request.form["email"]
-    password = request.form["password"]
+    email = request.args["email"]
+    password = request.args["password"]
 
     user = User.query.filter_by(email=email).first()
 
     if not user:
         flash("No such user")
-        return redirect("/login")
+        return redirect("/")
 
     if user.password != password:
         flash("Incorrect password")
-        return redirect("/login")
+        return redirect("/")
 
     session["user_id"] = user.user_id
 
     flash("Logged in")
-    # return redirect("/users/%s" % user.user_id)
     return render_template("dashboard.html", user=user)
 
-
+    
 
 @app.route('/register', methods=['POST'])
 def register_process():
@@ -60,10 +68,14 @@ def register_process():
     db.session.add(new_user)
     db.session.commit()
 
-    # flash("User %s added." % email)
+    flash("User %s added." % email)
     return render_template("dashboard.html", user=new_user)
 
+@app.route('/dashboard')
+def dashboard():
+    """After logined in user come to dashboad page."""
 
+    return render_template("dashboard.html")
 
 @app.route("/event_list_form")
 def event_list_from():
@@ -75,19 +87,27 @@ def event_list_from():
 def event_result():
     """Show list of events"""
 # to do : get date and location from search and then query db
+    picture = request.args.get('picture')
+    title = request.args.get('title')
     address = request.args.get('address')
-
-    event_address = Event.query.filter_by(address=address).all()
-    print event_address
     date = request.args.get('date')
+    date = datetime.strptime(date, "%Y-%m-%d")
 
-    event_available = Event.query.filter_by(date=date).all()
-    print event_available
+    picture = Event.query.filter_by(picture=picture).all()
+    title = Event.query.filter_by(title=title).all()
+    events_by_address = Event.query.filter(Event.date > date, Event.date < date + timedelta(days=1), 
+        Event.address.like("%" + address + "%")).all()
+    
+    
+    #events_by_date = Event.query.filter(Event.date > date, Event.date < date + timedelta(days=1)).all()
 
-    return render_template("event_result.html", event_available=event_available, 
-                                                event_address=event_address)
+    return render_template("event_result.html", title=title,
+                                                picture=picture,
+                                                #event_date=events_by_date, 
+                                                event_address=events_by_address)
     # events = Event.query.order_by('title').all()
     # return render_template("search_result.html", events=events)
+
 
 @app.route("/create_event_form")
 def create_event_form():
