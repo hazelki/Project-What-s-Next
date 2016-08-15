@@ -53,8 +53,8 @@ def login_process():
 
     flash("Logged in")
     
-    # return redirect("/dashboard")
-    return render_template("dashboard.html", user=user)
+    return redirect("/dashboard")
+    #return render_template("dashboard.html", user=user)
 
     
 
@@ -77,8 +77,9 @@ def register_process():
     db.session.add(new_user)
     db.session.commit()
 
-    flash("User %s added." % name)
-    return render_template("dashboard.html", user=new_user)
+    flash("User %s added." % firstname)
+    # return render_template("dashboard.html", user=new_user)
+    return redirect("/dashboard")
 
 @app.route('/dashboard')
 def dashboard():
