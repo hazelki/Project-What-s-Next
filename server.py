@@ -85,8 +85,14 @@ def register_process():
 def dashboard():
     """After logined in user come to dashboad page and see saved events."""
     user = User.query.get(session["user_id"])
+    events = Event.query.get(event_id)
 
     saved_events = Saved_Event.query.filter_by(user_id=user.user_id).all()
+
+    # Saved Events Table
+    # User Id, Event Id
+    #       1,    5
+    #       1,    6
 
     return render_template("dashboard.html", user=user, saved_events=saved_events)
 
@@ -125,36 +131,24 @@ def event_result():
 def add_event():
     """Add events."""
 
-    picture = request.form.get('picture')
-    title = request.form.get('title')
-    address = request.form.get('address')
-    date = request.form.get('date')
-    date = datetime.strptime(date, "%Y-%m-%d")
-    event = Event.query.filter_by(title=title).first()
-    # event_id = request.form.get("event_id")
-    # saved_event = Saved_Event(user_id=session["user_id"], event_id=event_id)
+    event_id = request.form.get("event_id")
+    user_id = request.form.get("user_id")
+    saved_event = Saved_Event.query.filter_by(user_id=user_id, event_id=event_id).first()
     
+
+    user = User.query.get(session['user_id'])
+    event = Event.query.get(event_id)
+
     # if already added
-    if event:
-        saved_event = event
+    if saved_event:
         flash("Already in your dashboard")
 
     #save event into database
-    if not find_event:
-        saved_event = Event(picure=picture, title=title, address=address, date=date)
+    if not saved_event:
+        saved_event = Saved_Event(user_id=user.user_id, event_id=event.event_id)
         db.session.add(saved_event)
         db.session.commit()
 
-    user = User.query.get(session['user_id'])
-    event = Event.query.get(add_event.event_id)
-    
-    db.session.add(saved_event)
-    db.session.commit()
-
-    saved_event = Saved_Event(user_id=user.user_id, event_id=event.event_id)
-
-    db.session.add(saved_event)
-    db.session.commit()
     
     flash("Event %s added.")
     return "event saved"
