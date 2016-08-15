@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
+<!-- <script src ="/static/add_event.js" /> -->
+<script type="text/javascript" src="/static/add_event.js"></script>
 <div class="well spaced" style="width:60%">
     <h2>Events</h2>
     <ul>
@@ -9,9 +11,16 @@
                 {{ event.title }} {{ event.date }} {{ event.address }})
               </a>
               <img src = "{{ event.picture }}">
-          </li>
+
+<!-- <form action="/add" method="POST"> -->
+  <!-- <input type="checkbox" name="add" value="add"> Add -->
+      <button id="attend" onclick="submitButton({{ event.event_id }})">Attend</button>
+ <!--  </form> -->
+
+        </li>
      {% endfor %}
     </ul><br>
 </div>
+<div id="result"></div>
 {% endblock %}
 

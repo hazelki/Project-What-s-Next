@@ -8,11 +8,20 @@
 </div>
 
 <h2>List of events to attend<h2>
+<div>
+<ul>
+      {% for event in saved_events %}
+          <li>
+              <p>{{ event.event_id }} {{ event.user_id }}</p>
+              <!-- <img src = "{{ event.picture }}"> -->
 
+        </li>
+     {% endfor %}
+    </ul><br>
+    </div>
 
-
-<h2>List of organized events</h2>
-
+<!-- <h2>List of organized events</h2>
+ -->
 
 <!-- <form action="create_event.html">
 

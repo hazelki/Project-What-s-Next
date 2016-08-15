@@ -52,6 +52,8 @@ def login_process():
     session["user_id"] = user.user_id
 
     flash("Logged in")
+    
+    # return redirect("/dashboard")
     return render_template("dashboard.html", user=user)
 
     
@@ -63,25 +65,36 @@ def register_process():
     # Get form variables
     email = request.form["email"]
     password = request.form["password"]
-    new_user = User(email=email, password=password) # Syntax how to save it in to db
+    firstname = request.form["firstname"]
+    lastname = request.form["lastname"]
+    phone = request.form["phone"]
+
+
+    # Syntax how to save it in to db
+    new_user = User(email=email, password=password, firstname=firstname,
+    lastname=lastname, phone=phone) 
 
     db.session.add(new_user)
     db.session.commit()
 
-    flash("User %s added." % email)
+    flash("User %s added." % name)
     return render_template("dashboard.html", user=new_user)
 
 @app.route('/dashboard')
 def dashboard():
-    """After logined in user come to dashboad page."""
+    """After logined in user come to dashboad page and see saved events."""
+    user = User.query.get(session["user_id"])
 
-    return render_template("dashboard.html")
+    saved_events = Saved_Event.query.filter_by(user_id=user.user_id).all()
+
+    return render_template("dashboard.html", user=user, saved_events=saved_events)
 
 @app.route("/event_list_form")
 def event_list_from():
-    """Search filter by location and date"""
+    """Displaying form for search by location and date"""
     
     return render_template('event_list_form.html')
+    #return render_template('/')
     
 @app.route("/event_result")
 def event_result():
@@ -107,33 +120,75 @@ def event_result():
                                                 event_address=events_by_address)
     # events = Event.query.order_by('title').all()
     # return render_template("search_result.html", events=events)
+@app.route('/add', methods=['POST'])
+def add_event():
+    """Add events."""
 
+    picture = request.form.get('picture')
+    title = request.form.get('title')
+    address = request.form.get('address')
+    date = request.form.get('date')
+    date = datetime.strptime(date, "%Y-%m-%d")
+    event = Event.query.filter_by(title=title).first()
+    # event_id = request.form.get("event_id")
+    # saved_event = Saved_Event(user_id=session["user_id"], event_id=event_id)
+    
+    # if already added
+    if event:
+        saved_event = event
+        flash("Already in your dashboard")
 
-@app.route("/create_event_form")
-def create_event_form():
-    """Show form for adding an event."""
+    #save event into database
+    if not find_event:
+        saved_event = Event(picure=picture, title=title, address=address, date=date)
+        db.session.add(saved_event)
+        db.session.commit()
 
-    return render_template("create_event.html")
-
-@app.route('/create_event', methods=['POST'])
-def create_event():
-    """Create an event"""
-
-#***********category = request.form.get
-
-    title = request.form.get("title")
-    address = request.form.get("address")
-    date = request.form.get("date")
-    time = request.form.get("time")
-
-    db.session.add()
+    user = User.query.get(session['user_id'])
+    event = Event.query.get(add_event.event_id)
+    
+    db.session.add(saved_event)
     db.session.commit()
 
-    return render_template("event_created.html", 
-                            title=title, 
-                            address=address,
-                            date=date,
-                            time=time)
+    saved_event = Saved_Event(user_id=user.user_id, event_id=event.event_id)
+
+    db.session.add(saved_event)
+    db.session.commit()
+    
+    flash("Event %s added.")
+    return "event saved"
+
+    
+    # return saved_event
+    # return render_template("event_result.html", saved_event=saved_event)
+    #return redirect("/event_result/%s" % event_id)
+
+
+# @app.route("/create_event_form")
+# def create_event_form():
+#     """Show form for adding an event."""
+
+#     return render_template("create_event.html")
+
+# @app.route('/create_event', methods=['POST'])
+# def create_event():
+#     """Create an event"""
+
+# #***********category = request.form.get
+
+#     title = request.form.get("title")
+#     address = request.form.get("address")
+#     date = request.form.get("date")
+#     time = request.form.get("time")
+
+#     db.session.add()
+#     db.session.commit()
+
+#     return render_template("event_created.html", 
+#                             title=title, 
+#                             address=address,
+#                             date=date,
+#                             time=time)
 
 
 # @app.route('/logout')
