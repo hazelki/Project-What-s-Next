@@ -85,16 +85,19 @@ def register_process():
 def dashboard():
     """After logined in user come to dashboad page and see saved events."""
     user = User.query.get(session["user_id"])
-    events = Event.query.get(event_id)
 
     saved_events = Saved_Event.query.filter_by(user_id=user.user_id).all()
 
-    # Saved Events Table
-    # User Id, Event Id
-    #       1,    5
-    #       1,    6
+    eventsarray = []
+    for saved_event in saved_events:
+       event = saved_event.event
+       eventsarray.append(event)
 
-    return render_template("dashboard.html", user=user, saved_events=saved_events)
+    # [saved_event1, saved_event2]
+    # [saved_event1.event, saved_event2.event]
+
+
+    return render_template("dashboard.html", user=user, saved_events=eventsarray)
 
 @app.route("/event_list_form")
 def event_list_from():

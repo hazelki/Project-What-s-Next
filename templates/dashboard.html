@@ -10,11 +10,27 @@
 <h2>List of events to attend<h2>
 <div>
 <ul>
+
+<!--
+
+saved_events = [ { user_id: 1, event_id: 5, event = <Event> }, 
+                { user_id: 1, event_id: 5, event = <Event> } ]
+event = saved_events[0].event
+event.title == "bay area"
+-
+
+eventsarray = []
+for saved_event in saved_events:
+  eventsarray.append(saved_event.event)
+
+
+-->
+
       {% for event in saved_events %}
           <li>
-              <p>{{ event.event_id }} {{ event.user_id }}</p>
-              <!-- <img src = "{{ event.picture }}"> -->
-
+              <p>{{ event.event_id }} {{ event.organizer}}</p>
+              <img src = "{{ event.picture }}">
+              <p>{{event.title}}</p>
         </li>
      {% endfor %}
     </ul><br>
