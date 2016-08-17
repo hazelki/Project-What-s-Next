@@ -206,9 +206,9 @@ def twilio():
     auth_token = "30db1cff769ddaa88c88f18a07760ff7"
     client = TwilioRestClient(account_sid, auth_token)
 
-    message = client.messages.create(to="+19175204059", from_="+16468469646",
+    message = client.messages.create(to="+", from_="+16468469646",
                                      body="Hello there!")
-
+    flash("Your message was sent successfully.")
     return redirect("/dashboard") 
 
 # @app.route('/logout')
