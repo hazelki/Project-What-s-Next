@@ -40,7 +40,7 @@ for saved_event in saved_events:
 <h2>List of organized events</h2>
 <div>
 <ul>
-      {% for event in event %}
+      {% for event in organized_events %}
               <hr>
                     <p>{{ event.title }}</p>
                     <p>{{event.date}}</p>
@@ -49,5 +49,12 @@ for saved_event in saved_events:
       {% endfor %}
           </ul><br>
           </div>
+
+ <br>
+          <p>Send me a reminder text:</p>
+            <form action="/twilio" method="POST">
+              <input type="text" id="input-twilio-box" name="phone">
+              <input type="submit" value="Send">
+              </form>
 
 {% endblock %}

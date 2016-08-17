@@ -4,10 +4,13 @@ from flask import Flask, render_template, request, flash, redirect, session
 from flask_debugtoolbar import DebugToolbarExtension
 from datetime import datetime, timedelta
 from model import connect_to_db, db, User, Event, Saved_Event, Category, Event_Category
-
+from flask_mail import Mail
 from sqlalchemy import extract
+from twilio.rest import TwilioRestClient
+
 
 app = Flask(__name__)
+mail = Mail(app)
 
 # Required to use Flask sessions and the debug toolbar
 app.secret_key = "alskdjf7246ryoiq4h5pn2u93m4"
@@ -95,14 +98,13 @@ def dashboard():
 
     # [saved_event1, saved_event2]
     # [saved_event1.event, saved_event2.event]
-    event = Event.query.filter_by(organizer=user.user_id).all()
-
+    organized_events = Event.query.filter_by(organizer=user.user_id).all()
+    print organized_events
     eventslist = []
-    for event in event:
-       event = event.event
+    for event in organized_events:
        eventslist.append(event)
 
-    return render_template("dashboard.html", user=user, saved_events=eventsarray, event=event)
+    return render_template("dashboard.html", user=user, saved_events=eventsarray, organized_events=eventslist)
 
 @app.route("/event_list_form")
 def event_list_from():
@@ -182,7 +184,7 @@ def create_event():
     time = request.form.get("time")
     new_date = datetime.utcnow()
     #date = new_date.strftime("%Y-%m-%d")
-    event = Event(title=title, address=address, date=new_date)
+    event = Event(title=title, address=address, date=new_date, organizer=user.user_id)
 
     db.session.add(event)
     db.session.commit()
@@ -195,6 +197,19 @@ def create_event():
     return redirect("/dashboard")
     #return render_template("dashboard.html", events=events, user=user)
 
+@app.route('/twilio', methods=['POST'])
+def twilio():
+
+    user_phone = request.form.get('phone')
+
+    account_sid = "AC7c9c9da138015da2f3a398a6712cafe7"
+    auth_token = "30db1cff769ddaa88c88f18a07760ff7"
+    client = TwilioRestClient(account_sid, auth_token)
+
+    message = client.messages.create(to="+19175204059", from_="+16468469646",
+                                     body="Hello there!")
+
+    return redirect("/dashboard") 
 
 # @app.route('/logout')
 # def logout():
