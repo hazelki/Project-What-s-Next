@@ -3,15 +3,7 @@
 <div class="well spaced" style="width:40%;">
 <h1>Create an Event</h1>
 
-<form action="/event_created" method="POST">
-<label>Choose event category</label>
-    <div class="dropdown">
-    <select name="category">
-    <option value="music">Music</option>
-    <option value="food">Food And Drink</option>
-    <option value="art">Art</option>
-    </select>
-    </div>
+<form action="/create_event" method="POST">
     
     <div class="form-group">
         <label>
@@ -20,26 +12,24 @@
         </label>
     </div>
 
-    <div class="form-group">
-        <label>
-            Event Location:
-            <input type="text" name="address" class="form-control">
-        </label>
-    </div>
-
-    <div class="form-group">
-        <label>
-            Event Date:
-            <input type="text" name="date" class="form-control">
-        </label>
-    </div>
-    <div class="form-group">
+   <div class="form-group">
         <label>
             Event Time:
-            <input type="text" name="time" class="form-control">
+            <input type="datetime-local" name="time" class="form-control">
         </label>
     </div>
-
+    <!-- <div class="form-group">
+        <label>
+            Event Date:
+            <input type="date" name="date">
+        </label>
+    </div> -->
+    <div class="form-group">
+        <label>
+            Address:
+            <textarea name="address"></textarea>
+    </div>
+    
     <div class="form-group">
         <input type="submit" value="Add">
     </div>

@@ -95,9 +95,14 @@ def dashboard():
 
     # [saved_event1, saved_event2]
     # [saved_event1.event, saved_event2.event]
+    event = Event.query.filter_by(organizer=user.user_id).all()
 
+    eventslist = []
+    for event in event:
+       event = event.event
+       eventslist.append(event)
 
-    return render_template("dashboard.html", user=user, saved_events=eventsarray)
+    return render_template("dashboard.html", user=user, saved_events=eventsarray, event=event)
 
 @app.route("/event_list_form")
 def event_list_from():
@@ -110,22 +115,22 @@ def event_list_from():
 def event_result():
     """Show list of events"""
 # to do : get date and location from search and then query db
-    picture = request.args.get('picture')
-    title = request.args.get('title')
+    # picture = request.args.get('picture')
+    # title = request.args.get('title')
     address = request.args.get('address')
     date = request.args.get('date')
+    # import pdb; pdb.set_trace()
     date = datetime.strptime(date, "%Y-%m-%d")
 
-    picture = Event.query.filter_by(picture=picture).all()
-    title = Event.query.filter_by(title=title).all()
+    # picture = Event.query.filter_by(picture=picture).all()
+    # title = Event.query.filter_by(title=title).all()
     events_by_address = Event.query.filter(Event.date > date, Event.date < date + timedelta(days=1), 
         Event.address.like("%" + address + "%")).all()
     
-    
+    print "everything okay"    
     #events_by_date = Event.query.filter(Event.date > date, Event.date < date + timedelta(days=1)).all()
 
-    return render_template("event_result.html", title=title,
-                                                picture=picture,
+    return render_template("event_result.html",
                                                 #event_date=events_by_date, 
                                                 event_address=events_by_address)
     # events = Event.query.order_by('title').all()
@@ -135,26 +140,25 @@ def add_event():
     """Add events."""
 
     event_id = request.form.get("event_id")
+    print "event", event_id
     user_id = request.form.get("user_id")
+    print "user", user_id
     saved_event = Saved_Event.query.filter_by(user_id=user_id, event_id=event_id).first()
-    
+    print saved_event
 
     user = User.query.get(session['user_id'])
     event = Event.query.get(event_id)
 
-    # if already added
-    if saved_event:
-        flash("Already in your dashboard")
 
     #save event into database
-    if not saved_event:
+    if saved_event is None:
         saved_event = Saved_Event(user_id=user.user_id, event_id=event.event_id)
+        print "if statement ran"
         db.session.add(saved_event)
         db.session.commit()
 
-    
-    flash("Event %s added.")
-    return "event saved"
+
+    return "saved"
 
     
     # return saved_event
@@ -162,31 +166,34 @@ def add_event():
     #return redirect("/event_result/%s" % event_id)
 
 
-# @app.route("/create_event_form")
-# def create_event_form():
-#     """Show form for adding an event."""
+@app.route("/create_event_form")
+def create_event_form():
+    """Show form for adding an event."""
 
-#     return render_template("create_event.html")
+    return render_template("create_event.html")
 
-# @app.route('/create_event', methods=['POST'])
-# def create_event():
-#     """Create an event"""
+@app.route('/create_event', methods=['POST'])
+def create_event():
+    """Create an event"""
+    user = User.query.get(session["user_id"])
+    title = request.form.get("title")
+    address = request.form.get("address")
+    date = request.form.get("date")
+    time = request.form.get("time")
+    new_date = datetime.utcnow()
+    #date = new_date.strftime("%Y-%m-%d")
+    event = Event(title=title, address=address, date=new_date)
 
-# #***********category = request.form.get
+    db.session.add(event)
+    db.session.commit()
 
-#     title = request.form.get("title")
-#     address = request.form.get("address")
-#     date = request.form.get("date")
-#     time = request.form.get("time")
-
-#     db.session.add()
-#     db.session.commit()
-
-#     return render_template("event_created.html", 
-#                             title=title, 
-#                             address=address,
-#                             date=date,
-#                             time=time)
+    # return render_template("dashboard.html", 
+    #                         title=title, 
+    #                         address=address,
+    #                         date=date)
+    flash("Your event created.")
+    return redirect("/dashboard")
+    #return render_template("dashboard.html", events=events, user=user)
 
 
 # @app.route('/logout')

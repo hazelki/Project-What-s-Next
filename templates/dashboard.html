@@ -1,12 +1,12 @@
 {% extends 'base.html' %} {% block content %}
 
-<h1>Welcome</h1>
-<br>
 <div class="well spaced" style="width:97%">
-  <h2>{{ user.email }}</h2>
+  <h2>Welcome {{ user.firstname }}</h2>
 
 </div>
-
+<a href="/create_event_form">Create Event</a><br>
+  
+<a href="/event_list_form">Search Event</a>
 <h2>List of events to attend<h2>
 <div>
 <ul>
@@ -27,29 +27,27 @@ for saved_event in saved_events:
 -->
 
       {% for event in saved_events %}
-          <li>
-              <p>{{ event.event_id }} {{ event.organizer}}</p>
+        <hr>
+              <p>{{ event.title }}</p>
               <img src = "{{ event.picture }}">
-              <p>{{event.title}}</p>
-        </li>
+              <p>{{event.date}}</p>
+              <p>{{event.address}}</p>
+        
      {% endfor %}
     </ul><br>
     </div>
 
-<!-- <h2>List of organized events</h2>
- -->
-
-<!-- <form action="create_event.html">
-
-<div class="form-group">
-<label>Create and event</label>
-        <input type="submit" value="Create" class="btn">
-    </div>
-</form> -->
-
-<a href="/event_list_form">Search</a>
-
-
-
+<h2>List of organized events</h2>
+<div>
+<ul>
+      {% for event in event %}
+              <hr>
+                    <p>{{ event.title }}</p>
+                    <p>{{event.date}}</p>
+                    <p>{{event.address}}</p>
+              
+      {% endfor %}
+          </ul><br>
+          </div>
 
 {% endblock %}

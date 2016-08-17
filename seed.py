@@ -39,9 +39,12 @@ def load_events():
 	#commit the work 
 	db.session.commit()
 
+if __name__=="__main__":
+	connect_to_db(app)
+	db.create_all()
+	load_events()
 
-connect_to_db(app)
-load_events()
+
 
 
 
