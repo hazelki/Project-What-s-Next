@@ -32,6 +32,11 @@ for saved_event in saved_events:
               <img src = "{{ event.picture }}">
               <p>{{event.date}}</p>
               <p>{{event.address}}</p>
+              <p>Send me a reminder text:</p>
+            <form action="/twilio/{{ event.event_id }}" method="POST">
+              <input type="text" id="input-twilio-box" name="phone">
+              <input type="submit" value="Send">
+              </form>
         
      {% endfor %}
     </ul><br>
@@ -51,10 +56,6 @@ for saved_event in saved_events:
           </div>
 
  <br>
-          <p>Send me a reminder text:</p>
-            <form action="/twilio" method="POST">
-              <input type="text" id="input-twilio-box" name="phone">
-              <input type="submit" value="Send">
-              </form>
+          
 
 {% endblock %}

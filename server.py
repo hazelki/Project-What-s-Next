@@ -197,17 +197,21 @@ def create_event():
     return redirect("/dashboard")
     #return render_template("dashboard.html", events=events, user=user)
 
-@app.route('/twilio', methods=['POST'])
-def twilio():
+@app.route('/twilio/<int:event_id>', methods=['POST'])
+def twilio(event_id):
 
     user_phone = request.form.get('phone')
+
+    event = Event.query.get(event_id)
+
+    body = "title:{}, adress: {}, date: {}".format(event.title, event.address, event.date)
 
     account_sid = "AC7c9c9da138015da2f3a398a6712cafe7"
     auth_token = "30db1cff769ddaa88c88f18a07760ff7"
     client = TwilioRestClient(account_sid, auth_token)
 
-    message = client.messages.create(to="+", from_="+16468469646",
-                                     body="Hello there!")
+    message = client.messages.create(to=user_phone, from_="+16468469646",
+                                     body=body)
     flash("Your message was sent successfully.")
     return redirect("/dashboard") 
 
