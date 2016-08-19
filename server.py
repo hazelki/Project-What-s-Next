@@ -4,12 +4,23 @@ from flask import Flask, render_template, request, flash, redirect, session
 from flask_debugtoolbar import DebugToolbarExtension
 from datetime import datetime, timedelta
 from model import connect_to_db, db, User, Event, Saved_Event, Category, Event_Category
-from flask_mail import Mail
+from flask import Flask
+from flask_mail import Mail, Message
 from sqlalchemy import extract
 from twilio.rest import TwilioRestClient
 
 
 app = Flask(__name__)
+app.config.update(
+    DEBUG=True,
+    #EMAIL SETTINGS
+    MAIL_SERVER='smtp.gmail.com',
+    MAIL_PORT=587,
+    MAIL_USE_SSL=False,
+    MAIL_USE_TLS=True,
+    MAIL_USERNAME = 'awesomeeventsf@gmail.com',
+    MAIL_PASSWORD = 'izmirsf12'
+    )
 mail = Mail(app)
 
 # Required to use Flask sessions and the debug toolbar
@@ -214,6 +225,23 @@ def twilio(event_id):
                                      body=body)
     flash("Your message was sent successfully.")
     return redirect("/dashboard") 
+
+@app.route('/email')
+def send_mail():
+
+        # Add this in to dashboard  user_email = request.form.get('user_email')    
+        email = User.query.all()
+
+        email_body = "title:{}, adress: {}, date: {}".format(event.title, event.address, event.date)
+        #Message object from flash mail
+        msg = Message("Your Event",
+          sender="kirtishazel@gmail.com",
+          recipients=[email])
+        
+        msg.body = "Your event:"(email_body=email_body)          
+        mail.send(msg)
+        return 'Mail sent!'
+
 
 # @app.route('/logout')
 # def logout():

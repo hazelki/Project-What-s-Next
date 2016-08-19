@@ -35,7 +35,10 @@ for saved_event in saved_events:
               <p>Send me a reminder text:</p>
             <form action="/twilio/{{ event.event_id }}" method="POST">
               <input type="text" id="input-twilio-box" name="phone">
-              <input type="submit" value="Send">
+              <input type="submit" value="Text me a reminder">
+              </form>
+              <form action="/email">
+              <input type="submit" value="Email me a reminder" name="user_email">
               </form>
         
      {% endfor %}
