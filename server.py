@@ -229,18 +229,32 @@ def twilio(event_id):
 @app.route('/email')
 def send_mail():
 
-        # Add this in to dashboard  user_email = request.form.get('user_email')    
-        email = User.query.all()
+        user = User.query.get(session['user_id'])
 
-        email_body = "title:{}, adress: {}, date: {}".format(event.title, event.address, event.date)
+        # Add this in to dashboard     
+        user_object = User.query.filter(User.user_id == user).first()
+        
+
+        user_object.email
+        print user_object
+
+
+        # email = user.email
+        # user_object[0].email
+
+
+
+        email_body = "testing"
+        #"title:{}, adress: {}, date: {}".format(event.title, event.address, event.date)
         #Message object from flash mail
         msg = Message("Your Event",
-          sender="kirtishazel@gmail.com",
+          sender="awesomeeventsf@gmail.com",
           recipients=[email])
         
-        msg.body = "Your event:"(email_body=email_body)          
+        msg.body = "Your event:"
         mail.send(msg)
         return 'Mail sent!'
+        #return redirect("/dashboard")
 
 
 # @app.route('/logout')

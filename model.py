@@ -32,7 +32,7 @@ class User(db.Model):
     def __repr__(self):
         """Provide helpful representation when printed."""
 
-        return "<User user_id=%s email=%s>" % (self.user_id, self.email, self.firstname, self.lastname)
+        return "<User user_id=%s email=%s firstname=%s lastname=%s >" % (self.user_id, self.email, self.firstname, self.lastname)
 
     
 
