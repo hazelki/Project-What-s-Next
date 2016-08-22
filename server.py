@@ -65,6 +65,7 @@ def login_process():
 
     session["user_id"] = user.user_id
 
+
     flash("Logged in")
     
     return redirect("/dashboard")
@@ -226,35 +227,36 @@ def twilio(event_id):
     flash("Your message was sent successfully.")
     return redirect("/dashboard") 
 
-@app.route('/email')
+@app.route('/email', methods=['POST'])
 def send_mail():
 
-        user = User.query.get(session['user_id'])
+    user = User.query.get(session['user_id'])
 
-        # Add this in to dashboard     
-        user_object = User.query.filter(User.user_id == user).first()
+    event_id = request.form.get("event_id")
+    event = Event.query.get(event_id)
+     
+    # user_object = User.query.filter(User.user_id == user).first()
         
 
-        user_object.email
-        print user_object
+    # user_object.email
+    # print user_object.email
 
 
-        # email = user.email
-        # user_object[0].email
+    # email = user.email
+    # user_object[0].email
 
 
 
-        email_body = "testing"
-        #"title:{}, adress: {}, date: {}".format(event.title, event.address, event.date)
-        #Message object from flash mail
-        msg = Message("Your Event",
-          sender="awesomeeventsf@gmail.com",
-          recipients=[email])
-        
-        msg.body = "Your event:"
-        mail.send(msg)
-        return 'Mail sent!'
-        #return redirect("/dashboard")
+    email_body = "title:{}, adress: {}, date: {}".format(event.title, event.address, event.date)
+    #Message object from flash mail
+    msg = Message("Your Event",
+      sender="awesomeeventsf@gmail.com",
+      recipients=[user.email])
+    
+    msg.body = "Your event details: " + email_body
+    mail.send(msg)
+    return 'Mail sent!'
+    #return redirect("/dashboard")
 
 
 # @app.route('/logout')

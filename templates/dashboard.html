@@ -1,4 +1,6 @@
 {% extends 'base.html' %} {% block content %}
+<script type="text/javascript" src="/static/dashboard.js"></script>
+
 
 <div class="well spaced" style="width:97%">
   <h2>Welcome {{ user.firstname }}</h2>
@@ -37,9 +39,11 @@ for saved_event in saved_events:
               <input type="text" id="input-twilio-box" name="phone">
               <input type="submit" value="Text me a reminder">
               </form>
-              <form action="/email">
+
+              <button id="{{ event.event_id }}" onclick="emailReminder({{ event.event_id }})">Email me a reminder</button> 
+              <!-- <form action="/email">
               <input type="submit" value="Email me a reminder" name="user_email">
-              </form>
+              </form> -->
         
      {% endfor %}
     </ul><br>
