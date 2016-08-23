@@ -5,7 +5,9 @@ import pprint
 pp = pprint.PrettyPrinter(indent=4)
 token = "BRNZBA2WMA3SZZOQFZLP"
 api_url = "https://www.eventbriteapi.com/v3/"
-cities = ["San Francisco", "Oakland", "Palo Alto"]
+cities = ["San Francisco", "Oakland", "Fremont", "Santa Rosa", "Hayward", "Richmond", "Sunnyvale",
+"Concord", "Palo Alto", "Napa", "Sonoma", "San Mateo", "Santa Clara", "Solano", "Alameda", "Contra Costa",
+ "Marin", "San Jose", "Berkeley"]
 
 events = []
 city_count = 0
