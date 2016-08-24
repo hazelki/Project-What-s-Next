@@ -27,7 +27,9 @@ def load_events():
 		event_db = Event(title=event["title"],
 		          date=event["date"],
 		          address=event["address"],
-		          picture=event["picture"])
+		          picture=event["picture"],
+		          lat=event["lat"],
+		          longi=event["longi"])
 
 		print event_db
 
@@ -57,7 +59,9 @@ def load_events_eventful():
 		eventful_db = Event(title=event["title"],
 		          date=event["date"],
 		          address=event["address"],
-		          picture=event["picture"])
+		          picture=event["picture"],
+		          lat=event["lat"],
+		          longi=event["longi"])
 
 		print eventful_db
 

@@ -237,15 +237,8 @@ def send_mail():
      
     # user_object = User.query.filter(User.user_id == user).first()
         
-
     # user_object.email
     # print user_object.email
-
-
-    # email = user.email
-    # user_object[0].email
-
-
 
     email_body = "title:{}, adress: {}, date: {}".format(event.title, event.address, event.date)
     #Message object from flash mail
