@@ -1,92 +1,79 @@
 {% extends 'base.html' %}
 {% block content %}
 	
-    	<h1>Welcome to Events Page</h1>
-	
-    <h2>Search for Events</h2>
+    
   <form action="/event_result" method="GET">
+       
+            <legend>Search for Events</legend>
+            <div class="form-group">
+            <label for name="bylocation">Search by location:</label>
+            <input type="location" name="address"  class="form-control">
+                
+            </div>
 
-        <div class="form-group">
-            <label>Search by location:
-                <input type="location" name="address"  class="form-control">
-            </label>
-        </div>
+            <div class="form-group">
+            <label for="bydate">Search by date:</label>
+            <input type="date" name="date"  class="form-control">
+                
+            </div>
 
-        <div class="form-group">
-            <label>Search by date:
-                <input type="date" name="date"  class="form-control">
-            </label>
-        </div>
+            <div class="form-group">
+                <button type="submit" class="form-control">Search</button>
+            </div>
 
-        <div class="form-group">
-            <input type="submit" value="Submit" class="form-control">
-        </div>
+            </form>
+        
 
-    </form>
-
-<div>
-    <h3>Login</h3>
     <form action="/login">
-
+    <legend>Login</legend>
         <div class="form-group">
-            <label>Email:
+            <label for name="email">Email:</label>
                 <input type="email" name="email" required class="form-control">
             </label>
         </div>
 
         <div class="form-group">
-            <label>Password:
+            <label for name="password">Password:</label>
                 <input type="password" name="password" required class="form-control">
             </label>
         </div>
 
         <div class="form-group">
-            <input type="submit" value="Submit">
+            <input type="submit" value="Login">
         </div>
 
-    </form>
-</div>
-</div>
-<div class="well spaced" style="width:40%;">
+     </form>
 
-<h3>Register</h3>
-
-<form action="register" method="POST">
-
-    <div class="form-group">
-    <label>
-            Firstname
+        <form action="register" method="POST">
+        <legend>Register</legend>
+        <div class="form-group">
+        <label for name="firstname">Firstname:</label>
             <input type="firstname" name="firstname" class="form-control">
-        </label><br>
-        <label>
-            Lastname
+        <br>
+        <label for name="lastname">Lastname:</label>
             <input type="lastname" name="lastname" class="form-control">
-        </label><br>
+        <br>
 
-        <label>
-            Email
+        <label for name="emailad">Email:</label>
             <input type="email" name="email" class="form-control">
-        </label><br>
+        <br>
    
-        <label>
-            Password
+        <label for name="password">Password:</label>
             <input type="password" name="password" class="form-control">
-        </label><br>
+        <br>
 
-        <label>
-            Phone
+        <label for name="phone">Phone:</label>
             <input type="phone" name="phone" class="form-control">
-        </label><br>
-        <label>
-            Zipcode
+        <br>
+        <label for name="zip">Zipcode:</label>
             <input type="text" name="zipcode" class="form-control">
-        </label><br>
+        <br>
     
         <input type="submit" value="Register" class="btn btn-danger">
-    </div>
+        </div>
 
-</form>
-</div>
+        </form>
+
 
 
 {% endblock %}

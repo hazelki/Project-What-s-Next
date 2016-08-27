@@ -4,10 +4,11 @@ from flask import Flask, render_template, request, flash, redirect, session
 from flask_debugtoolbar import DebugToolbarExtension
 from datetime import datetime, timedelta
 from model import connect_to_db, db, User, Event, Saved_Event, Category, Event_Category
-from flask import Flask
+from flask import Flask, jsonify
 from flask_mail import Mail, Message
 from sqlalchemy import extract
 from twilio.rest import TwilioRestClient
+
 
 
 app = Flask(__name__)
@@ -135,13 +136,15 @@ def event_result():
     date = request.args.get('date')
     # import pdb; pdb.set_trace()
     date = datetime.strptime(date, "%Y-%m-%d")
+    print date
 
     # picture = Event.query.filter_by(picture=picture).all()
     # title = Event.query.filter_by(title=title).all()
     events_by_address = Event.query.filter(Event.date > date, Event.date < date + timedelta(days=1), 
         Event.address.like("%" + address + "%")).all()
     
-    print "everything okay"    
+    print "everything okay" 
+    print events_by_address   
     #events_by_date = Event.query.filter(Event.date > date, Event.date < date + timedelta(days=1)).all()
 
     return render_template("event_result.html",
@@ -251,7 +254,27 @@ def send_mail():
     return 'Mail sent!'
     #return redirect("/dashboard")
 
+@app.route('/seed_data/data.json')
+def bear_info():
+    """JSON information about events."""
 
+    events = {
+        event.event_id: {
+            "event_id": event.event_id,
+            "title": event.title,
+            "date": event.date,
+            "address": event.address,
+            "picture": event.picture,
+            "lat": event.lat,
+            "longi":event.longi
+        }
+        for event in Event.query.all() }
+    # print events
+    return jsonify(events)
+
+
+
+    
 # @app.route('/logout')
 # def logout():
 #     """Log out."""

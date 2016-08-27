@@ -29,7 +29,7 @@ def load_events():
 		          address=event["address"],
 		          picture=event["picture"],
 		          lat=event["lat"],
-		          longi=event["longi"])
+		          longi=event["long"])
 
 		print event_db
 
@@ -61,7 +61,7 @@ def load_events_eventful():
 		          address=event["address"],
 		          picture=event["picture"],
 		          lat=event["lat"],
-		          longi=event["longi"])
+		          longi=event["long"])
 
 		print eventful_db
 
@@ -78,7 +78,7 @@ if __name__=="__main__":
 	connect_to_db(app)
 	db.drop_all()
 	db.create_all()
-	load_events_eventful()
+	# load_events_eventful()
 	load_events()
 
 

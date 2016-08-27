@@ -48,8 +48,8 @@ class Event(db.Model):
     address = db.Column(db.String(1000))
     event_category = db.Column(db.String(100))
     picture = db.Column(db.String(1000))
-    lat = db.Column(db.String(15), nullable=True)
-    longi = db.Column(db.String(15), nullable=True)
+    lat = db.Column(db.String(30), nullable=True)
+    longi = db.Column(db.String(30), nullable=True)
     organizer = db.Column(db.Integer, db.ForeignKey("users.user_id"))
     
 
