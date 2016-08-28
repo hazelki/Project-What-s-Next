@@ -1,68 +1,54 @@
 {% extends 'base.html' %} {% block content %}
 <script type="text/javascript" src="/static/dashboard.js"></script>
 
+<div class="container">
+  <div class="well spaced" style="width:97%">
+    <h2>Welcome {{ user.firstname }}</h2>
 
-<div class="well spaced" style="width:97%">
-  <h2>Welcome {{ user.firstname }}</h2>
-
-</div>
-<a href="/create_event_form">Create Event</a><br>
-  
-<a href="/event_list_form">Search Event</a>
-<h2>List of events to attend<h2>
-<div>
-<ul>
-
-<!--
-
-saved_events = [ { user_id: 1, event_id: 5, event = <Event> }, 
-                { user_id: 1, event_id: 5, event = <Event> } ]
-event = saved_events[0].event
-event.title == "bay area"
--
-
-eventsarray = []
-for saved_event in saved_events:
-  eventsarray.append(saved_event.event)
-
-
--->
-
+  </div>
+  <a href="/create_event_form">Create Event</a><br>
+    
+  <a href="/event_list_form">Search Event</a>
+  <h2>Saved Events<h2>
+  <div>
+    <ul>
       {% for event in saved_events %}
-        <hr>
-              <p>{{ event.title }}</p>
-              <img src = "{{ event.picture }}">
-              <p>{{event.date}}</p>
-              <p>{{event.address}}</p>
-              <p>Send me a reminder text:</p>
+        <div class="well" style="overflow:hidden;margin:auto;width:80%">  
+          <p>{{ event.title }}</p>
+          <img src = "{{ event.picture }}">
+          <p>{{event.date}}</p>
+          <p>{{event.address}}</p>
+          <div>
             <form action="/twilio/{{ event.event_id }}" method="POST">
-              <input type="text" id="input-twilio-box" name="phone">
-              <input type="submit" value="Text me a reminder">
-              </form>
-
-              <button id="{{ event.event_id }}" onclick="emailReminder({{ event.event_id }})">Email me a reminder</button> 
-              <!-- <form action="/email">
-              <input type="submit" value="Email me a reminder" name="user_email">
-              </form> -->
-        
-     {% endfor %}
-    </ul><br>
-    </div>
-
-<h2>List of organized events</h2>
-<div>
-<ul>
-      {% for event in organized_events %}
-              <hr>
-                    <p>{{ event.title }}</p>
-                    <p>{{event.date}}</p>
-                    <p>{{event.address}}</p>
-              
+              <div class="col-sm-4">
+                <input type="text" id="input-twilio-box" name="phone" class="form-control" placeholder="666-777-8888" />
+              </div>
+              <div class="col-sm-4">
+                <input type="submit" value="Text me a reminder" class="btn btn-success btn-block form-control" />
+              </div>
+            </form>
+            <div class="col-sm-4">
+              <button class="btn btn-block btn-primary" id="{{ event.event_id }}" onclick="emailReminder({{ event.event_id }})">Email me a reminder</button>
+            </div>
+          </div> 
+        </div>
       {% endfor %}
-          </ul><br>
-          </div>
+    </ul>
+    <br>
+  </div>
 
- <br>
-          
+  <h2>List of organized events</h2>
+  <div>
+    <ul>
+      {% for event in organized_events %}
+        <hr>
+        <p>{{ event.title }}</p>
+        <p>{{event.date}}</p>
+        <p>{{event.address}}</p>
+      {% endfor %}
+    </ul>
+    <br>
+  </div>
+</div>    
 
 {% endblock %}

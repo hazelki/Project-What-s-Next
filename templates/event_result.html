@@ -1,38 +1,46 @@
 {% extends 'base.html' %}
 {% block content %}
 <!-- <script src ="/static/add_event.js" /> -->
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA5HfSHKmN08SlylBPFXkpPTOASF8fc01I&callback=initMap">
+    </script>
+    
 <script type="text/javascript" src="/static/add_event.js"></script>
-<div class="well spaced" style="width:60%">
-    <h2>Events</h2>
-    <ul>
-      {% for event in event_address %}
-          <li>
-              <a href="/search_result/{{ event.title }}">
-                {{ event.title }} {{ event.date }} {{ event.address }})
-              </a>
-              <img src = "{{ event.picture }}">
+<script>
+  var events = '{{events}}';
+</script>
+<div class="container">
+  <div class="spaced" style="width:60%">
+      <h2>Events</h2>
+      <ul>
+        {% for event in events %}
+          <div class="well">
+            <li>
+                <a href="/search_result/{{ event.title }}">
+                  {{ event.title }} {{ event.date }} {{ event.address }})
+                </a>
+                <img src = "{{ event.picture }}">
+                <button id="{{ event.event_id }}" onclick="submitButton({{ event.event_id }})">Attend</button>
+            </li>
+          </div>
+       {% endfor %}
+      </ul><br>
 
-<!-- <form action="/add" method="POST"> -->
-  <!-- <input type="checkbox" name="add" value="add"> Add -->
-      <button id="{{ event.event_id }}" onclick="submitButton({{ event.event_id }})">Attend</button>
- <!--  </form> -->
+  </div>
 
-        </li>
-     {% endfor %}
-    </ul><br>
+  <div id="result"></div>
 
-</div>
-<div id="result"></div>
+  <script src="/static/eventmap.js"></script>
 
-    <script src="/static/eventmap.js"></script>
-
-    <style> 
-    #map {
+  <style> 
+  #map {
     width: 50%;
     height: 800px;
-}
-    </style>
-    <div id="map"></div>
+  }
+  </style>
+
+  <div id="map"></div>
+</div>
 
 {% endblock %}
 

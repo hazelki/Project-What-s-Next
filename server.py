@@ -149,7 +149,7 @@ def event_result():
 
     return render_template("event_result.html",
                                                 #event_date=events_by_date, 
-                                                event_address=events_by_address)
+                                                events=events_by_address)
     # events = Event.query.order_by('title').all()
     # return render_template("search_result.html", events=events)
 @app.route('/add', methods=['POST'])
@@ -255,7 +255,7 @@ def send_mail():
     #return redirect("/dashboard")
 
 @app.route('/seed_data/data.json')
-def bear_info():
+def event_info():
     """JSON information about events."""
 
     events = {
@@ -273,6 +273,24 @@ def bear_info():
     return jsonify(events)
 
 
+@app.route('/events/<int:event_id>')
+def get_event(event_id):
+
+    event = Event.query.get(event_id)
+
+    # events: { eventId: { "event_id": event.event_id, "title": event.title } }
+
+    event_dict = {
+            "event_id": event.event_id,
+            "title": event.title,
+            "date": event.date,
+            "address": event.address,
+            "picture": event.picture,
+            "lat": event.lat,
+            "longi":event.longi
+        }
+    
+    return jsonify(event_dict)
 
     
 # @app.route('/logout')
