@@ -255,35 +255,35 @@ def send_mail():
     return 'Mail sent!'
     #return redirect("/dashboard")
 
-@app.route('/fake_data')
-def fake_data():
-    # events = {"events":[
-    # {
-    #     "event_id": 1,
-    #     "title": "title",
-    #     "date": "2016-01-01",
-    #     "address": "addres",
-    #     "picture": "picture",
-    #     "lat": "37.77",
-    #     "longi": "-122.41"
-    #     }]
-    # }
-    # return jsonify(events)
-    print "HIT!!!!!"
-    list = [
-        {
-        "event_id": 1,
-        "title": "title",
-        "date": "2016-01-01",
-        "address": "addres",
-        "picture": "http://d39kbiy71leyho.cloudfront.net/wp-content/uploads/2016/05/09170020/cats-politics-TN.jpg",
-        "lat": "37.77",
-        "longi": "-122.41"
-        }
-    ]
+# @app.route('/fake_data')
+# def fake_data():
+#     # events = {"events":[
+#     # {
+#     #     "event_id": 1,
+#     #     "title": "title",
+#     #     "date": "2016-01-01",
+#     #     "address": "addres",
+#     #     "picture": "picture",
+#     #     "lat": "37.77",
+#     #     "longi": "-122.41"
+#     #     }]
+#     # }
+#     # return jsonify(events)
+#     print "HIT!!!!!"
+#     list = [
+#         {
+#         "event_id": 1,
+#         "title": "title",
+#         "date": "2016-01-01",
+#         "address": "addres",
+#         "picture": "http://d39kbiy71leyho.cloudfront.net/wp-content/uploads/2016/05/09170020/cats-politics-TN.jpg",
+#         "lat": "37.77",
+#         "longi": "-122.41"
+#         }
+#     ]
     # jsonify will do for us all the work, returning the
     # previous data structure in JSON
-    return jsonify(events=list)
+    # return jsonify(events=list)
 
 @app.route('/marker_result')
 def event_info():
