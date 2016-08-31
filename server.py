@@ -146,10 +146,11 @@ def event_result():
     print "everything okay" 
     print events_by_address   
     #events_by_date = Event.query.filter(Event.date > date, Event.date < date + timedelta(days=1)).all()
-
+    # import pdb; pdb.set_trace()
     return render_template("event_result.html",
                                                 #event_date=events_by_date, 
-                                                events=events_by_address)
+                                                events=events_by_address,
+                                                address=address, date=date)
     # events = Event.query.order_by('title').all()
     # return render_template("search_result.html", events=events)
 @app.route('/add', methods=['POST'])
@@ -254,43 +255,84 @@ def send_mail():
     return 'Mail sent!'
     #return redirect("/dashboard")
 
-@app.route('/seed_data/data.json')
+@app.route('/fake_data')
+def fake_data():
+    # events = {"events":[
+    # {
+    #     "event_id": 1,
+    #     "title": "title",
+    #     "date": "2016-01-01",
+    #     "address": "addres",
+    #     "picture": "picture",
+    #     "lat": "37.77",
+    #     "longi": "-122.41"
+    #     }]
+    # }
+    # return jsonify(events)
+    print "HIT!!!!!"
+    list = [
+        {
+        "event_id": 1,
+        "title": "title",
+        "date": "2016-01-01",
+        "address": "addres",
+        "picture": "http://d39kbiy71leyho.cloudfront.net/wp-content/uploads/2016/05/09170020/cats-politics-TN.jpg",
+        "lat": "37.77",
+        "longi": "-122.41"
+        }
+    ]
+    # jsonify will do for us all the work, returning the
+    # previous data structure in JSON
+    return jsonify(events=list)
+
+@app.route('/marker_result')
 def event_info():
-    """JSON information about events."""
-
-    events = {
-        event.event_id: {
-            "event_id": event.event_id,
-            "title": event.title,
-            "date": event.date,
-            "address": event.address,
-            "picture": event.picture,
-            "lat": event.lat,
-            "longi":event.longi
-        }
-        for event in Event.query.all() }
-    # print events
-    return jsonify(events)
-
-
-@app.route('/events/<int:event_id>')
-def get_event(event_id):
-
-    event = Event.query.get(event_id)
-
-    # events: { eventId: { "event_id": event.event_id, "title": event.title } }
-
-    event_dict = {
-            "event_id": event.event_id,
-            "title": event.title,
-            "date": event.date,
-            "address": event.address,
-            "picture": event.picture,
-            "lat": event.lat,
-            "longi":event.longi
-        }
+    """search result about events."""
+# date
+# location similar to form
+    print request.args
+    event_ids = request.args.get("id").split(',')
+    print "**********" , event_ids
+    # .get list method , grap the list of all id s  for loop thru those add each event
+    # in event array, create marker for multiple events
+#query the database event_id, in the html, 
+    # address = request.form.get("address")
+    # date = datetime.strptime(date, "%Y-%m-%d")
+    events = Event.query.filter(Event.event_id.in_(event_ids)).all()
     
-    return jsonify(event_dict)
+    eventslist = []
+    for event in events :
+       eventslist.append({
+            "event_id": event.event_id,
+            "title": event.title,
+            "date": event.date,
+            "address": event.address,
+            "picture": event.picture,
+            "lat": event.lat,
+            "longi":event.longi
+        })
+    
+    return jsonify(events=eventslist)
+
+
+# @app.route('/events/<int:event_id>')
+# def get_event(event_id):
+
+#     event = Event.query.get(event_id)
+
+#     # events: { eventId: { "event_id": event.event_id, "title": event.title } }
+
+#     event_dict = {
+#             "event_id": event.event_id,
+#             "title": event.title,
+#             "date": event.date,
+#             "address": event.address,
+#             "picture": event.picture,
+#             "lat": event.lat,
+#             "longi":event.longi
+#         }
+    
+#     return jsonify(event_dict)
 
     
 # @app.route('/logout')
