@@ -68,11 +68,11 @@
     <br>
   </div>
 
-  <h2>List of organized events</h2>
-  <div>
+  <h3>List of organized events</h3>
+ 
     <ul>
       {% for event in organized_events %}
-        <hr>
+      <div class="well" id="wrapper">
         <p>{{ event.title }}</p>
         <p>{{event.date}}</p>
         <p>{{event.address}}</p>

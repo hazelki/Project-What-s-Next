@@ -46,13 +46,13 @@ def index():
 #     # render_template when GET method
 
 
-@app.route('/login')
+@app.route('/login', methods=['POST'])
 def login_process():
     """Process login."""
 
     # Get form variables
-    email = request.args["email"]
-    password = request.args["password"]
+    email = request.form["email"]
+    password = request.form["password"]
 
     user = User.query.filter_by(email=email).first()
 
@@ -93,14 +93,16 @@ def register_process():
     db.session.add(new_user)
     db.session.commit()
 
-    flash("User %s added." % firstname)
+    flash("User %s added" % firstname)
     # return render_template("dashboard.html", user=new_user)
     return redirect("/dashboard")
 
 @app.route('/dashboard')
 def dashboard():
     """After logined in user come to dashboad page and see saved events."""
+    print session
     user = User.query.get(session["user_id"])
+    print '$$$', user
 
     saved_events = Saved_Event.query.filter_by(user_id=user.user_id).all()
 
@@ -341,7 +343,7 @@ def logout():
     """Log out."""
 
     del session["user_id"]
-    flash("Logged Out.")
+    flash("Logged Out")
     return redirect("/")
 
 if __name__ == "__main__":
