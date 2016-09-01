@@ -21,7 +21,7 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
-                        <li><a href="/create_event">Create Event</a></li>
+                        <li><a href="/create_event_form">Create Event</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                     <li><a href="/event_list_form">Search Event</a></li>
@@ -45,15 +45,15 @@
             <!-- Wrapper for slides -->
             <div class="carousel-inner" role="listbox">
                 <div class="item active">
-                    <img src="static/img/fireworks.jpg" alt="Chania">
+                    <img src="static/img/fireworks.jpg" width="800" height="345">
                 </div>
 
                 <div class="item">
-                    <img src="static/img/a.jpg" alt="Chania">
+                    <img src="static/img/concert.jpg" width="800" height="345">
                 </div>
 
                 <div class="item">
-                    <img src="static/img/dancers.jpg" alt="Flower">
+                    <img src="static/img/clasical.jpg" width="800" height="345">
                 </div>
             </div>
 
@@ -101,30 +101,8 @@
         
 </div>
 
-	
-    
-  <!--  
 
-    <form action="/login">
-    <legend>Login</legend>
-        <div class="form-group">
-            <label for name="email">Email:</label>
-                <input type="email" name="email" required class="form-control">
-            </label>
-        </div>
-
-        <div class="form-group">
-            <label for name="password">Password:</label>
-                <input type="password" name="password" required class="form-control">
-            </label>
-        </div>
-
-        <div class="form-group">
-            <input type="submit" value="Login">
-        </div>
-
-     </form>
-
+     <div class="well" style="margin:auto;width:30%">
         <form action="register" method="POST">
         <legend>Register</legend>
         <div class="form-group">
@@ -142,19 +120,31 @@
         <label for name="password">Password:</label>
             <input type="password" name="password" class="form-control">
         <br>
-
-        <label for name="phone">Phone:</label>
-            <input type="phone" name="phone" class="form-control">
-        <br>
-        <label for name="zip">Zipcode:</label>
-            <input type="text" name="zipcode" class="form-control">
-        <br>
     
         <input type="submit" value="Register" class="btn btn-danger">
         </div>
 
-        </form> -->
+        </form>
 
+    <!-- <form action="/login">
+    <legend>Login</legend>
+        <div class="form-group">
+            <label for name="email">Email:</label>
+                <input type="email" name="email" required class="form-control">
+            </label>
+        </div>
+
+        <div class="form-group">
+            <label for name="password">Password:</label>
+                <input type="password" name="password" required class="form-control">
+            </label>
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Login">
+        </div>
+
+     </form> -->
 
 
 {% endblock %}

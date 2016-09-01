@@ -193,6 +193,7 @@ def create_event_form():
 @app.route('/create_event', methods=['POST'])
 def create_event():
     """Create an event"""
+    print "hi"*10
     user = User.query.get(session["user_id"])
     title = request.form.get("title")
     address = request.form.get("address")
@@ -335,13 +336,13 @@ def event_info():
 #     return jsonify(event_dict)
 
     
-# @app.route('/logout')
-# def logout():
-#     """Log out."""
+@app.route('/logout')
+def logout():
+    """Log out."""
 
-#     del session["user_id"]
-#     flash("Logged Out.")
-#     return redirect("/")
+    del session["user_id"]
+    flash("Logged Out.")
+    return redirect("/")
 
 if __name__ == "__main__":
     # We have to set debug=True here, since it has to be True at the point
