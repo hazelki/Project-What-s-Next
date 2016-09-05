@@ -102,15 +102,21 @@ class Event_Category(db.Model):
     # Define relationship to event
     event = db.relationship("Event",
                             backref=db.backref("eventcat", order_by=event_id)) 
+def example_data():
+    user = User(user_id=1, first_name="Hazel", last_name="K", email="hazelk@gmail.com", password="123")
+    event = Event(title= 'blue', address='San Francisco', date= '2016-09-10T12:00:00Z')
+    
 
+    db.session.add_all([user, event])
+    db.session.commit()
 ##############################################################################
 # Helper functions
 
-def connect_to_db(app):
+def connect_to_db(app, db_uri= 'postgresql:///events'):
     """Connect the database to our Flask app."""
     print "connect_to_db"
     # Configure to use our PostgreSQL database
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///events'
+    app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
 #    app.config['SQLALCHEMY_ECHO'] = True
     db.app = app
     db.init_app(app)
