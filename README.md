@@ -35,7 +35,7 @@ Tests for Event App are located in tests.py . Event App offers 57% test coverage
 
 Testing does not cover querying the database, hence the low percentage.
 
-![coverageHTML](/static/coverage.jpg?raw=true "Testing Coverage")
+![coverageHTML](/static/img/coverage.jpg?raw=true "Testing Coverage")
 
 ## Tech Stack
 Python, Javascript, JQuery, Jinja, Flask, SQL, SQLAlchemy, ajax, HTML, CSS, Coverage 
