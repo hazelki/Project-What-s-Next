@@ -70,9 +70,7 @@ def login_process():
     flash("Logged in")
     
     return redirect("/dashboard")
-    #return render_template("dashboard.html", user=user)
-
-    
+   
 
 @app.route('/register', methods=['POST'])
 def register_process():
@@ -81,28 +79,26 @@ def register_process():
     # Get form variables
     email = request.form["email"]
     password = request.form["password"]
-    firstname = request.form["firstname"]
-    lastname = request.form["lastname"]
-    phone = request.form["phone"]
+    # firstname = request.form["firstname"]
+    # lastname = request.form["lastname"]
+    # phone = request.form["phone"]
 
 
     # Syntax how to save it in to db
-    new_user = User(email=email, password=password, firstname=firstname,
-    lastname=lastname, phone=phone) 
+    new_user = User(email=email, password=password) 
 
     db.session.add(new_user)
     db.session.commit()
 
-    flash("User %s added" % firstname)
-    # return render_template("dashboard.html", user=new_user)
+    flash("User %s added" % email)
     return redirect("/dashboard")
+
 
 @app.route('/dashboard')
 def dashboard():
     """After logined in user come to dashboad page and see saved events."""
-    print session
+    # print session
     user = User.query.get(session["user_id"])
-    print '$$$', user
 
     saved_events = Saved_Event.query.filter_by(user_id=user.user_id).all()
 
@@ -114,7 +110,7 @@ def dashboard():
     # [saved_event1, saved_event2]
     # [saved_event1.event, saved_event2.event]
     organized_events = Event.query.filter_by(organizer=user.user_id).all()
-    print organized_events
+    # print organized_events
     eventslist = []
     for event in organized_events:
        eventslist.append(event)
@@ -131,24 +127,17 @@ def event_list_from():
 @app.route("/event_result")
 def event_result():
     """Show list of events"""
-# to do : get date and location from search and then query db
-    # picture = request.args.get('picture')
-    # title = request.args.get('title')
+
     address = request.args.get('address')
     date = request.args.get('date')
     # import pdb; pdb.set_trace()
     date = datetime.strptime(date, "%Y-%m-%d")
-    print date
 
-    # picture = Event.query.filter_by(picture=picture).all()
-    # title = Event.query.filter_by(title=title).all()
+
     events_by_address = Event.query.filter(Event.date > date, Event.date < date + timedelta(days=1), 
         Event.address.like("%" + address + "%")).all()
-    
-    print "everything okay" 
-    print events_by_address   
-    #events_by_date = Event.query.filter(Event.date > date, Event.date < date + timedelta(days=1)).all()
-    # import pdb; pdb.set_trace()
+      
+   
     return render_template("event_result.html",
                                                 #event_date=events_by_date, 
                                                 events=events_by_address,
@@ -160,11 +149,9 @@ def add_event():
     """Add events."""
 
     event_id = request.form.get("event_id")
-    print "event", event_id
     user_id = request.form.get("user_id")
-    print "user", user_id
     saved_event = Saved_Event.query.filter_by(user_id=user_id, event_id=event_id).first()
-    print saved_event
+    
 
     user = User.query.get(session['user_id'])
     event = Event.query.get(event_id)
@@ -173,17 +160,12 @@ def add_event():
     #save event into database
     if saved_event is None:
         saved_event = Saved_Event(user_id=user.user_id, event_id=event.event_id)
-        print "if statement ran"
+        
         db.session.add(saved_event)
         db.session.commit()
 
 
     return "saved"
-
-    
-    # return saved_event
-    # return render_template("event_result.html", saved_event=saved_event)
-    #return redirect("/event_result/%s" % event_id)
 
 
 @app.route("/create_event_form")
@@ -195,7 +177,7 @@ def create_event_form():
 @app.route('/create_event', methods=['POST'])
 def create_event():
     """Create an event"""
-    print "hi"*10
+    
     user = User.query.get(session["user_id"])
     title = request.form.get("title")
     address = request.form.get("address")
@@ -208,10 +190,7 @@ def create_event():
     db.session.add(event)
     db.session.commit()
 
-    # return render_template("dashboard.html", 
-    #                         title=title, 
-    #                         address=address,
-    #                         date=date)
+  
     flash("Your event created.")
     return redirect("/dashboard")
     #return render_template("dashboard.html", events=events, user=user)
@@ -242,10 +221,6 @@ def send_mail():
     event_id = request.form.get("event_id")
     event = Event.query.get(event_id)
      
-    # user_object = User.query.filter(User.user_id == user).first()
-        
-    # user_object.email
-    # print user_object.email
 
     email_body = "title:{}, adress: {}, date: {}".format(event.title, event.address, event.date)
     #Message object from flash mail
@@ -258,49 +233,14 @@ def send_mail():
     return 'Mail sent!'
     #return redirect("/dashboard")
 
-# @app.route('/fake_data')
-# def fake_data():
-#     # events = {"events":[
-#     # {
-#     #     "event_id": 1,
-#     #     "title": "title",
-#     #     "date": "2016-01-01",
-#     #     "address": "addres",
-#     #     "picture": "picture",
-#     #     "lat": "37.77",
-#     #     "longi": "-122.41"
-#     #     }]
-#     # }
-#     # return jsonify(events)
-#     print "HIT!!!!!"
-#     list = [
-#         {
-#         "event_id": 1,
-#         "title": "title",
-#         "date": "2016-01-01",
-#         "address": "addres",
-#         "picture": "http://d39kbiy71leyho.cloudfront.net/wp-content/uploads/2016/05/09170020/cats-politics-TN.jpg",
-#         "lat": "37.77",
-#         "longi": "-122.41"
-#         }
-#     ]
-    # jsonify will do for us all the work, returning the
-    # previous data structure in JSON
-    # return jsonify(events=list)
 
 @app.route('/marker_result')
 def event_info():
     """search result about events."""
-# date
-# location similar to form
-    print request.args
+
+    # print request.args
     event_ids = request.args.get("id").split(',')
-    print "**********" , event_ids
-    # .get list method , grap the list of all id s  for loop thru those add each event
-    # in event array, create marker for multiple events
-#query the database event_id, in the html, 
-    # address = request.form.get("address")
-    # date = datetime.strptime(date, "%Y-%m-%d")
+
     events = Event.query.filter(Event.event_id.in_(event_ids)).all()
     
     eventslist = []
@@ -316,26 +256,6 @@ def event_info():
         })
     
     return jsonify(events=eventslist)
-
-
-# @app.route('/events/<int:event_id>')
-# def get_event(event_id):
-
-#     event = Event.query.get(event_id)
-
-#     # events: { eventId: { "event_id": event.event_id, "title": event.title } }
-
-#     event_dict = {
-#             "event_id": event.event_id,
-#             "title": event.title,
-#             "date": event.date,
-#             "address": event.address,
-#             "picture": event.picture,
-#             "lat": event.lat,
-#             "longi":event.longi
-#         }
-    
-#     return jsonify(event_dict)
 
     
 @app.route('/logout')

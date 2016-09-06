@@ -1,13 +1,19 @@
 {% extends 'base.html' %}
 {% block content %}
 <!-- <script src ="/static/add_event.js" /> -->
+
 <link rel="stylesheet" href="/static/css/event_result.css">
-    <script src="/static/eventmap.js" type="text/javascript"></script>
-    <script async defer
+  <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA5HfSHKmN08SlylBPFXkpPTOASF8fc01I&callback=initMap">
     </script>
+<script src="/static/eventmap.js" type="text/javascript"></script>
+    
+<!-- <script type="text/javascript" src="/static/add_event.js"></script> -->
 
-<script type="text/javascript" src="/static/add_event.js"></script>
+    
+  
+
+
 
 <style> 
   #map {
@@ -65,13 +71,16 @@
 <!-- Here is where we are going to update the 
 map with all the points we rendered in the list above -->
     <script>
-    events = document.querySelectorAll("#gallery > div > li > input");
+    events = document.querySelectorAll(".test_event_id");
+    // console.log(events)
     var eventIds = []
     var length = events.length;
+
     for(var i = 0; i < length; i++) {
         eventIds.push(events[i].value);
     }
     
+    // console.log(eventIds);
      renderEvents(eventIds);
     </script>
     

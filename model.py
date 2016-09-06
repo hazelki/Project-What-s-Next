@@ -21,18 +21,18 @@ class User(db.Model):
     __tablename__ = "users"
 
     user_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    firstname = db.Column(db.String(20))
-    lastname = db.Column(db.String(20))
+    # firstname = db.Column(db.String(20))
+    # lastname = db.Column(db.String(20))
     email = db.Column(db.String(64), nullable=True)
     password = db.Column(db.String(64), nullable=True)
-    phone = db.Column(db.String(30))
+    # phone = db.Column(db.String(30))
   
 
 
     def __repr__(self):
         """Provide helpful representation when printed."""
 
-        return "<User user_id=%s email=%s firstname=%s lastname=%s >" % (self.user_id, self.email, self.firstname, self.lastname)
+        return "<User user_id=%s email=%s>" % (self.user_id, self.email)
 
     
 
