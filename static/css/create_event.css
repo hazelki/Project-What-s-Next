@@ -1,0 +1,36 @@
+/**********************************
+GENERAL
+***********************************/
+
+body {
+  font-family: 'Open Sans', sans-serif;
+}
+
+.container {
+  margin-top: 75px;
+}  
+.well {
+  width:40%;
+  margin: auto 
+}
+#image {
+  float: left;
+  width: 40%;
+  height: 400px;
+  overflow: hidden;
+  margin: 6%;
+  margin-top: 10px;
+}
+
+#form {
+  overflow: hidden;
+}
+
+/**********************************
+COLORS
+***********************************/
+
+body {
+  background-color: #fff;
+  color: #000;
+}

@@ -1,0 +1,52 @@
+/**********************************
+GENERAL
+***********************************/
+
+body {
+  font-family: 'Open Sans', sans-serif;
+}
+
+
+/**********************************
+Homepage
+***********************************/
+
+.item {
+  width: 100%;
+  height: 200px;
+}
+
+img {
+    width: 100%;
+    height: auto;
+}
+
+#myCarousel {
+  height: 500;
+  width: 700;
+  overflow: hidden;
+}
+
+#main {
+    margin-top: 75px;
+  }  
+
+  #carouselstyle {
+   width:100%; 
+   height: 450px !important;
+  }
+  .logreg {
+    width: 100%
+  }
+  .well {
+    overflow: auto;
+    width:80%; 
+  }
+ /**********************************
+COLORS
+***********************************/
+
+body {
+  background-color: #fff;
+  color: #000;
+} 

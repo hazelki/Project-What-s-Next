@@ -1,0 +1,61 @@
+/**********************************
+GENERAL
+***********************************/
+
+body {
+  font-family: 'Open Sans', sans-serif;
+}
+
+/*#wrapper {
+  max-width: 940px;
+  margin: 0 auto;
+  padding: 0 5%;
+}*/
+
+
+/*}
+a {
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+}
+
+h2 h3 {
+  margin: 0 0 1em 0;
+}*/
+
+
+
+/**********************************
+saved events
+***********************************/
+  .container {
+    margin-top: 75px;
+  }
+
+  .well {
+    overflow: auto;
+  }
+
+  img {
+    width: 100%;
+    height: 200px;
+  }
+
+/**********************************
+Created events
+***********************************/
+
+/**********************************
+COLORS
+***********************************/
+
+body {
+  background-color: #fff;
+  color: #000;
+}
+
+
+

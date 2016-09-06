@@ -1,0 +1,26 @@
+/**********************************
+GENERAL
+***********************************/
+
+body {
+  font-family: 'Open Sans', sans-serif;
+}
+
+
+
+#gallery {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+}
+
+
+/**********************************
+COLORS
+***********************************/
+
+body {
+  background-color: #fff;
+  color: #000;
+}
