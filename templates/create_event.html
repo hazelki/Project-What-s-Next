@@ -1,51 +1,60 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="container" style="margin-top: 75px">
-<div class="well spaced" style="width:40%; margin: auto">
+<link rel="stylesheet" type="text/css" href="/static/css/create_event.css"/>
+<div>
+<h3 align="center">Saved Events</h3>
+</div>
+<div>
+                    <img src="static/img/dining.jpg" id="image">
+                </div>
 
+<div class="container">
+<div>
+<h3 align="center">Create Events</h3>
+</div>
+    <div class="well spaced" id="form">
+        <form action="/create_event" method="POST">
 
-<form action="/create_event" method="POST">
-    
-    <div class="form-group">
-    <div class="col-sm-4">
-    <label>
-            Event Title:
-    </label>
-    </div>
-    <div class="col-sm-8">
-    <input type="text" name="title" class="form-control">
-    </div>    
+            <div class="form-group">
+                <div class="col-sm-4">
+                    <label>
+                        Event Title:
+                    </label>
+                </div>
+                <div class="col-sm-8">
+                    <input type="text" name="title" class="form-control">
+                </div>    
+            </div>
+            <br><br>
+            <div class="form-group">
+             <div class="col-sm-4">
+               <label>
+                Event Time: 
+            </label> 
+        </div>
+        <div class="col-sm-8">
+
+            <input type="datetime-local" name="time" class="form-control">
+        </div>
+
     </div>
     <br><br>
-   <div class="form-group">
-   <div class="col-sm-4">
-     <label>
-            Event Time: 
-     </label> 
-    </div>
-    <div class="col-sm-8">
-     
-    <input type="datetime-local" name="time" class="form-control">
-    </div>
-   
-    </div>
-    <br><br>
     <div class="form-group">
-    <div class="col-sm-4">
-        <label>
-            Address:
-        </label>
+        <div class="col-sm-4">
+            <label>
+                Address:
+            </label>
         </div>
         <div class="col-sm-8">
             <textarea name="address" class="form-control"></textarea>
-    </div>
+        </div>
     </div>
     <br><br><br>
     <div align="center" class="form-group">
-    
+
         <input type="submit" value="Add" class="btn-sm btn-success">
     </div>
-    </div>
+</div>
 
 </form>
 </div>

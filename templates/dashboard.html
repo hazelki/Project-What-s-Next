@@ -3,16 +3,17 @@
 
 <link rel="stylesheet" type="text/css" href="/static/css/dashboard.css"/>
 
-<div class="container" style="margin-top: 75px">
+<div class="container">
   <h4>Welcome {{ user.email }}</h4>
+  
 
     <div>
     <h3 align="center">Saved Events</h3>
     <ul id="gallery">
       {% for event in saved_events %}
-      <div class="well" style="overflow: auto">  
+      <div class="well">  
        <div class="col-sm-4">
-           <img src = "{{ event.picture }}" style="width: 100%; height: 200px">
+           <img src = "{{ event.picture }}">
        </div> 
        <div class="col-sm-8">
         <p><b>{{ event.title }}</b></p>
@@ -45,9 +46,14 @@
     <ul>
       {% for event in organized_events %}
       <div class="well">
-        <p>{{ event.title }}</p>
+      <div class="col-sm-4">
+           <img src = "/static/img/placeholder.jpeg">
+       </div> 
+       <div class="col-sm-8">
+        <p><b>{{ event.title }}</b></p>
         <p>{{event.date}}</p>
         <p>{{event.address}}</p>
+        </div>
         </div>
       {% endfor %}
     </ul>
